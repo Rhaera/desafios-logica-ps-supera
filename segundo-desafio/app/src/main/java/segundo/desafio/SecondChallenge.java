@@ -40,7 +40,7 @@ public class SecondChallenge {
         Scanner userInputScanner = new Scanner(System.in);
         System.out.println();
         System.out.println("Olá, bem vindo, vamos começar o desafio!");
-        System.out.println("Para começar, por favor, escolha um valor monetário variando de R$ 0.00 até no máximo R$ 1000000.00:");
+        System.out.println("Para começar, por favor, escolha um valor monetário variando de R$ 0.00 até no máximo R$ 1000000.00 (com precisão de até duas casas decimais):");
         while (true) {
             if (selectedAmountOfMoney >= 0 && selectedAmountOfMoney <= 1e6)
                 break;
@@ -53,12 +53,13 @@ public class SecondChallenge {
             if (selectedAmountOfMoney < 0 && isValidMonetaryValue)
                 selectedAmountOfMoney = Double.parseDouble(userInput);
             if (isValidMonetaryValue &&
-                (selectedAmountOfMoney > 1e6 || selectedAmountOfMoney < 0) &&
+                (selectedAmountOfMoney > 1e6 || selectedAmountOfMoney < 0 || (userInput.contains(".") && userInput.trim().substring(userInput.trim().indexOf(".")).length() > 3)) &&
                 !singletonInstance.isMonetaryValue(NOT_PARSABLE_STRING))
                 selectedAmountOfMoney = -1d;
         }
         if (selectedAmountOfMoney >= 0) {
             System.out.println("Pronto, segue a sequência das notas e das moedas (em ordem decrescente) minimamente necessárias para compor o valor monetário selecionado:");
+            System.out.println();
             BigDecimal moneyAmountConvertedToBigDecimal = BigDecimal.valueOf(selectedAmountOfMoney * 100).divide(BigDecimal.valueOf(100L), 2, RoundingMode.DOWN);
             moneyPerValueOfBillAndCoinPrinter(
                     singletonInstance.moneyPerValueOfBillAndCoinSelector(
@@ -85,19 +86,28 @@ public class SecondChallenge {
     }
 
     private static void moneyPerValueOfBillAndCoinPrinter(Map<BigDecimal, Integer> monetaryValueCatalogedTable, String toUpperCaseString, Predicate<BigDecimal> moneyMapFilterCriteria) {
-        System.out.println();
         System.out.println(toUpperCaseString.toUpperCase().concat("S:"));
         monetaryValueCatalogedTable.keySet()
             .stream()
-            .sorted()
+            .sorted(Collections.reverseOrder())
             .filter(moneyMapFilterCriteria)
-            .forEach(moneyType ->
-                System.out.println(monetaryValueCatalogedTable.get(moneyType) +
+            .forEach(moneyType -> {
+                int numberOfEachMoneyTypeRequired = monetaryValueCatalogedTable.get(moneyType);
+                System.out.println(
+                    (numberOfEachMoneyTypeRequired > 9999 ?
+                    numberOfEachMoneyTypeRequired :
+                    (numberOfEachMoneyTypeRequired >= 1000 ?
+                    numberOfEachMoneyTypeRequired + " " :
+                    (numberOfEachMoneyTypeRequired >= 100 ?
+                    numberOfEachMoneyTypeRequired + "  " :
+                    (numberOfEachMoneyTypeRequired >= 10 ?
+                    numberOfEachMoneyTypeRequired + "   " :
+                    numberOfEachMoneyTypeRequired + "    ")))) +
                     "     ".concat(toUpperCaseString.concat("(s)")) +
                     "     ".concat("de     R$") +
                     "     ".concat(moneyType.toString().length() > 5 ? "" + moneyType : (moneyType.toString().length() == 5 ? " " + moneyType : "  " + moneyType))
-                )
-            );
+                );
+            });
         System.out.println();
     }
 
