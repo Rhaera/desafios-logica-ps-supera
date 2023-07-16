@@ -7,6 +7,8 @@ import java.util.Scanner;
 
 public class FirstChallenge {
 
+    private static final String NOT_PARSABLE_STRING = "intentionalNotNumericString";
+
     public static void main(String[] args) {
         int chosenNumberCounter = 1;
         int amountOfIntegersToBeChosen = 0;
@@ -17,7 +19,7 @@ public class FirstChallenge {
         System.out.println("Para começar, por favor, escolha quantos números INTEIROS serão ordenados (sendo pelo menos 2 e no máximo 10.000 números):");
         while (true) {
             if (amountOfIntegersToBeChosen != 0 && selectedIntegers.size() == amountOfIntegersToBeChosen) {
-                System.out.println("Pronto, segue a sequência dos pares (em ordem crescente) e dos ímpares (em ordem decrescente):\n");
+                System.out.println("Pronto, segue a sequência dos pares (em ordem crescente) e dos ímpares (em ordem decrescente):");
                 evenAndOddSequencePrinter(selectedIntegers);
                 break;
             }
@@ -29,6 +31,8 @@ public class FirstChallenge {
             if (userInput.equals("s"))
                 break;
             boolean isValidIntegerAnswer = isInteger(userInput);
+            if (isValidIntegerAnswer && Integer.parseInt(userInput) < 1 && !isInteger(NOT_PARSABLE_STRING))
+                continue;
             if (amountOfIntegersToBeChosen != 0 && isValidIntegerAnswer) {
                 selectedIntegers.add(Integer.parseInt(userInput));
                 chosenNumberCounter++;
@@ -38,11 +42,12 @@ public class FirstChallenge {
             if (amountOfIntegersToBeChosen == 0 && isValidIntegerAnswer)
                 amountOfIntegersToBeChosen = Integer.parseInt(userInput);
             if (amountOfIntegersToBeChosen != 0 &&
-                (amountOfIntegersToBeChosen > 1e5 || amountOfIntegersToBeChosen <= 1) &&
-                !isInteger("intentionalNotNumericString"))
+                (amountOfIntegersToBeChosen > 1e4 || amountOfIntegersToBeChosen <= 1) &&
+                !isInteger(NOT_PARSABLE_STRING))
                 amountOfIntegersToBeChosen = 0;
         }
         System.out.println("Obrigado por participar do desafio #1! Volte sempre.");
+        System.out.println();
         userInputScanner.close();
     }
 
