@@ -40,7 +40,7 @@ public class FirstChallenge {
                 continue;
             }
             if (amountOfIntegersToBeChosen == 0 && isValidIntegerAnswer)
-                amountOfIntegersToBeChosen = Integer.parseInt(userInput);
+                amountOfIntegersToBeChosen = Integer.parseInt(userInput) == 0 ? 1 : Integer.parseInt(userInput);
             if (amountOfIntegersToBeChosen != 0 &&
                 (amountOfIntegersToBeChosen > 1e5 || amountOfIntegersToBeChosen <= 1) &&
                 !isInteger(NOT_PARSABLE_STRING))
