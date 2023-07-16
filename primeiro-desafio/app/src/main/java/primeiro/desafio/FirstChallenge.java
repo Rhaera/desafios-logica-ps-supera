@@ -12,31 +12,35 @@ public class FirstChallenge {
         int amountOfIntegersToBeChosen = 0;
         List<Integer> selectedIntegers = new ArrayList<>();
         Scanner userInputScanner = new Scanner(System.in);
+        System.out.println();
         System.out.println("Olá, bem vindo, vamos começar o desafio!");
-        System.out.println("Para começar, por favor, escolha quantos números INTEIROS serão ordenados (sendo pelo menos 2 e no máximo 10.000 números):\n");
+        System.out.println("Para começar, por favor, escolha quantos números INTEIROS serão ordenados (sendo pelo menos 2 e no máximo 10.000 números):");
         while (true) {
-            if (amountOfIntegersToBeChosen != 0)
-                System.out.printf("Por favor, digite o " + chosenNumberCounter + "º número ou %s para sair:\n", 's');
-            String userInput = userInputScanner.nextLine();
-            if (userInput.equals("s"))
-                break;
-            if (amountOfIntegersToBeChosen != 0 && chosenNumberCounter == amountOfIntegersToBeChosen) {
+            if (amountOfIntegersToBeChosen != 0 && selectedIntegers.size() == amountOfIntegersToBeChosen) {
+                System.out.println("Pronto, segue a sequência dos pares (em ordem crescente) e dos ímpares (em ordem decrescente):\n");
                 evenAndOddSequencePrinter(selectedIntegers);
                 break;
             }
-            if (amountOfIntegersToBeChosen != 0 && isInteger(userInput)) {
+            if (amountOfIntegersToBeChosen != 0)
+                System.out.printf("Por favor, digite o " + chosenNumberCounter + "º número ou %s para sair:\n", "'s'");
+            System.out.println();
+            String userInput = userInputScanner.nextLine();
+            System.out.println();
+            if (userInput.equals("s"))
+                break;
+            boolean isValidIntegerAnswer = isInteger(userInput);
+            if (amountOfIntegersToBeChosen != 0 && isValidIntegerAnswer) {
                 selectedIntegers.add(Integer.parseInt(userInput));
                 chosenNumberCounter++;
+                System.out.println();
                 continue;
             }
-            if (isInteger(userInput) && Integer.parseInt(userInput) <= 1e5 && Integer.parseInt(userInput) > 1) {
+            if (amountOfIntegersToBeChosen == 0 && isValidIntegerAnswer)
                 amountOfIntegersToBeChosen = Integer.parseInt(userInput);
-                continue;
-            }
-            if (amountOfIntegersToBeChosen == 0 && (Integer.parseInt(userInput) > 1e5 || Integer.parseInt(userInput) < 2)) {
-                System.out.println("Desculpe, valor inválido!\n");
-                System.out.printf("Por favor, digite um valor apropriado para prosseguirmos ou digite %s para sair.\n", 's');
-            }
+            if (amountOfIntegersToBeChosen != 0 &&
+                (amountOfIntegersToBeChosen > 1e5 || amountOfIntegersToBeChosen <= 1) &&
+                !isInteger("intentionalNotNumericString"))
+                amountOfIntegersToBeChosen = 0;
         }
         System.out.println("Obrigado por participar do desafio #1! Volte sempre.");
         userInputScanner.close();
@@ -45,6 +49,7 @@ public class FirstChallenge {
     public static void evenAndOddSequencePrinter(List<Integer> integerList) {
         evenSequencePrinter(integerList);
         oddSequencePrinter(integerList);
+        System.out.println();
     }
 
     private static boolean isInteger(String maybeInteger) {
@@ -52,8 +57,9 @@ public class FirstChallenge {
             Integer.parseInt(maybeInteger);
             return true;
         } catch (NumberFormatException failedConversionToInteger) {
-            System.out.println("Desculpe, valor inválido!\n");
-            System.out.printf("Por favor, digite um valor apropriado para prosseguirmos ou digite %s para sair.\n", 's');
+            System.out.println();
+            System.out.println("Desculpe, valor inválido!");
+            System.out.printf("Por favor, digite um valor apropriado para prosseguirmos ou digite %s para sair. ", "'s'");
             return false;
         }
     }
