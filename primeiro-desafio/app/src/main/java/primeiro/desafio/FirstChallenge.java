@@ -28,10 +28,10 @@ public class FirstChallenge {
             System.out.println();
             String userInput = userInputScanner.nextLine();
             System.out.println();
-            if (userInput.equals("s"))
+            if (userInput.trim().equalsIgnoreCase("s"))
                 break;
             boolean isValidIntegerAnswer = isInteger(userInput);
-            if (isValidIntegerAnswer && Integer.parseInt(userInput) < 1 && !isInteger(NOT_PARSABLE_STRING))
+            if (isValidIntegerAnswer && Integer.parseInt(userInput) < 0 && !isInteger(NOT_PARSABLE_STRING))
                 continue;
             if (amountOfIntegersToBeChosen != 0 && isValidIntegerAnswer) {
                 selectedIntegers.add(Integer.parseInt(userInput));
@@ -42,7 +42,7 @@ public class FirstChallenge {
             if (amountOfIntegersToBeChosen == 0 && isValidIntegerAnswer)
                 amountOfIntegersToBeChosen = Integer.parseInt(userInput);
             if (amountOfIntegersToBeChosen != 0 &&
-                (amountOfIntegersToBeChosen > 1e4 || amountOfIntegersToBeChosen <= 1) &&
+                (amountOfIntegersToBeChosen > 1e5 || amountOfIntegersToBeChosen <= 1) &&
                 !isInteger(NOT_PARSABLE_STRING))
                 amountOfIntegersToBeChosen = 0;
         }

@@ -10,8 +10,8 @@ class FirstChallengeTest {
 
     @Test void appHasAGreeting() {
         Assertions.assertDoesNotThrow(() -> FirstChallenge.evenAndOddSequencePrinter(new ArrayList<>(
-            new Random().ints(new Random().nextInt(2, (int) (1e4 + 1)))
-                .filter(possiblePositiveInt -> possiblePositiveInt > 0)
+            new Random().ints(new Random().nextInt(2, (int) (1e5 + 1)))
+                .filter(possibleNotNegativeInt -> possibleNotNegativeInt >= 0)
                 .boxed()
                 .toList()))
         );
