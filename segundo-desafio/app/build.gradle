@@ -26,7 +26,7 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass = 'segundo.desafio.App'
+    mainClass = 'segundo.desafio.SecondChallenge'
 }
 
 tasks.named('test') {
