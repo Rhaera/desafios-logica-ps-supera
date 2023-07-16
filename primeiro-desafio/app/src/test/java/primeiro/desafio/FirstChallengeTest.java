@@ -8,7 +8,7 @@ import java.util.Random;
 
 class FirstChallengeTest {
 
-    @Test void appHasAGreeting() {
+    @Test void checkingIfEvenAndOddSequencePrinterIsCorrectlyImplemented() {
         Assertions.assertDoesNotThrow(() -> FirstChallenge.evenAndOddSequencePrinter(new ArrayList<>(
             new Random().ints(new Random().nextInt(2, (int) (1e5 + 1)))
                 .filter(possibleNotNegativeInt -> possibleNotNegativeInt >= 0)
