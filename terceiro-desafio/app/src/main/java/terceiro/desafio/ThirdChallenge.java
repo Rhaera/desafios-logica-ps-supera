@@ -13,11 +13,6 @@ public class ThirdChallenge {
     }
 
     public static void main(String[] args) {
-        // test before UX
-        System.out.println(IntStream.of(12, 1, 15, 89, 4, 86).distinct().count());
-        int[] testArray = new int[]{12, 1, 12, 86, 12, 86, 4, 4, 3, 12};
-        System.out.println(allPairsWhichAchieveTargetValueInArray(0, testArray));
-        // test before UX
         Optional<Integer> target;
         int chosenNumberCounter = 1;
         int amountOfIntegersToBeChosen = 0;
@@ -26,27 +21,6 @@ public class ThirdChallenge {
         System.out.println();
         System.out.println("Olá, bem vindo, vamos começar o desafio!");
         System.out.println("Para iniciarmos, por favor, selecione o valor alvo (K) para o desafio #3 (sendo \"K\" um número inteiro):");
-        /*
-        while (true) {
-            System.out.println();
-            String userInput = userInputScanner.nextLine();
-            System.out.println();
-            if (userInput.trim().equalsIgnoreCase("s")) {
-                exit = true;
-                break;
-            }
-            boolean isValidIntegerAnswer = isInteger(userInput);
-            if (isValidIntegerAnswer) {
-                target = Integer.parseInt(userInput);
-                break;
-            }
-        }
-        if (exit) {
-            System.out.println("Obrigado por participar do desafio #3! Volte sempre.");
-            System.out.println();
-            System.exit(0);
-        }
-        */
         target = choosingTargetValueInsideLoop(userInputScanner);
         if (target.isEmpty())
             byeAndThanksFinalizer();
@@ -73,12 +47,13 @@ public class ThirdChallenge {
             if (amountOfIntegersToBeChosen == 0 && isValidIntegerAnswer)
                 amountOfIntegersToBeChosen = Integer.parseInt(userInput.trim()) == 0 ? 1 : Integer.parseInt(userInput.trim());
             if (amountOfIntegersToBeChosen != 0 &&
-                    amountOfIntegersToBeChosen <= 1 &&
-                    !isInteger(NOT_PARSABLE_STRING))
+                amountOfIntegersToBeChosen <= 1 &&
+                !isInteger(NOT_PARSABLE_STRING))
                 amountOfIntegersToBeChosen = 0;
         }
-        if (!(amountOfIntegersToBeChosen != 0 && chosenNumberCounter == amountOfIntegersToBeChosen + 1))
+        if (!(amountOfIntegersToBeChosen != 0 && chosenNumberCounter == amountOfIntegersToBeChosen + 1)) {
             byeAndThanksFinalizer();
+        }
         String finalAnswer = allPairsWhichAchieveTargetValueInArray(target.get(), selectedIntegers);
         if (target.get() == 0 && finalAnswer.contains(":"))
             finalAnswer = finalAnswer.substring(0, finalAnswer.length() - 1).concat(".");

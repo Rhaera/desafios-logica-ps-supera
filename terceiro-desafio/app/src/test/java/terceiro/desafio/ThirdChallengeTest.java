@@ -1,11 +1,14 @@
 package terceiro.desafio;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Assertions;
+
+import java.util.Random;
 
 class ThirdChallengeTest {
 
-    @Test void appHasAGreeting() {
-        assertNotNull();
+    @Test
+    void checkingIfAllPairsWhichAchieveTargetValueIsCorrectlyImplemented() {
+        Assertions.assertNotNull(ThirdChallenge.allPairsWhichAchieveTargetValueInArray(new Random().nextInt(), new Random().ints(new Random().nextInt()).toArray()));
     }
 }
